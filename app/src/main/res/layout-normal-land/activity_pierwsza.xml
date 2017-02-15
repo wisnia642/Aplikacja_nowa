@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/acc"
+    android:weightSum="1">
+
+    <Button
+        android:text="Czyść"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/button4"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/button5" />
+
+    <TextView
+        android:text="Dane do wprowadznia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView3"
+        android:textSize="20sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="Wstecz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button4"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/button5"
+        android:layout_marginBottom="26dp" />
+
+    <Button
+        android:text="Dalej"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button3"
+        android:layout_alignBaseline="@+id/button5"
+        android:layout_alignBottom="@+id/button5"
+        android:layout_toStartOf="@+id/button5" />
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextView"
+        android:textSize="18sp"
+        android:dropDownHeight="match_parent"
+        android:dropDownWidth="match_parent"
+        android:imeOptions="normal"
+        android:textAlignment="textStart"
+        android:gravity="top"
+        android:background="@color/common_google_signin_btn_text_dark_default"
+        android:maxLength="100"
+        android:layout_width="400dp"
+        android:layout_height="120dp"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp" />
+
+</RelativeLayout>
