@@ -42,6 +42,7 @@ public class Pierwsza extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent c = new Intent(Pierwsza.this, MainActivity.class);
+                c.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(c);
             }
         });
