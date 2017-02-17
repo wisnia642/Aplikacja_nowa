@@ -55,19 +55,20 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mAdView = (AdView) findViewById(R.id.reklama);
-        AdRequest adRequest = new AdRequest.Builder()
-                .build();
-        mAdView.loadAd(adRequest);
+        //mAdView = (AdView) findViewById(R.id.reklama);
+       // AdRequest adRequest = new AdRequest.Builder()
+      //          .build();
+      //  mAdView.loadAd(adRequest);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
+
         toggle.syncState();
 
        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+       navigationView.setNavigationItemSelectedListener(this);
 
         potwierdz = (Button) findViewById(R.id.button);
         wyczysc = (Button) findViewById(R.id.button2);
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity
         login.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                String empty="";
+                String empty;
                 empty = haslo.getText().toString();
                 if(empty.equals(""))
                 {
@@ -117,7 +118,7 @@ public class MainActivity extends AppCompatActivity
         haslo.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                String empty="";
+                String empty;
                 empty = login.getText().toString();
                 if (empty.equals(""))
                 {
@@ -130,22 +131,21 @@ public class MainActivity extends AppCompatActivity
 
 
 
-/*
+
         konto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("Tu będzie tworzenie konta");
+                showToast("Tu będzie przypomnienie hasła");
             }
         });
 
         przypomnienie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("Tu będzie przypomnienie");
+                showToast("Tu będzie tworzenie konta");
             }
         });
 
-*/
 
 
     }
@@ -197,9 +197,6 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-
-
     return super.onOptionsItemSelected(item);
     }
 
@@ -229,10 +226,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nev_manage1) {
-
-
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
