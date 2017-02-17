@@ -66,8 +66,8 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-      // NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-     //   navigationView.setNavigationItemSelectedListener(this);
+       NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         potwierdz = (Button) findViewById(R.id.button);
         wyczysc = (Button) findViewById(R.id.button2);
@@ -219,13 +219,17 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
-
-
-        } else if (id == R.id.nev_manage1) {
-            Uri uri = Uri.parse("http://www.wp.com"); // missing 'http://' will cause crashed
+            Uri uri = Uri.parse("http://www.onet.pl"); // missing 'http://' will cause crashed
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
+
+        } else if (id == R.id.nav_send) {
+            Uri uri = Uri.parse("http://www.interia.pl"); // missing 'http://' will cause crashed
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+
+        } else if (id == R.id.nev_manage1) {
+
 
         }
 
