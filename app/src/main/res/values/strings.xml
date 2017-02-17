@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Aplikacja-test</string>
     <string name="banner">ca-app-pub-9621271949675165/5072406138</string>
+    <string name="interstitial_full_screen">ca-app-pub-0664570763252260/1769900428</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 

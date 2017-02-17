@@ -1,6 +1,7 @@
 package com.example.michal_hit_kody.aplikacja_test;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,8 +20,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 
 import org.w3c.dom.Text;
 
@@ -29,12 +32,14 @@ public class MainActivity extends AppCompatActivity
 
     Button potwierdz;
     Button wyczysc;
+    Button strona;
     EditText login;
     EditText haslo;
     TextView napis_haslo;
     TextView napis_user;
     TextView konto;
     TextView przypomnienie;
+    private AdView mAdView;
 
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(),
@@ -50,9 +55,10 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-       AdView adView = (AdView)this.findViewById(R.id.reklama);
-        AdRequest adRequest = new AdRequest.Builder().build();
-       adView.loadAd(adRequest);
+        mAdView = (AdView) findViewById(R.id.reklama);
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        mAdView.loadAd(adRequest);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -72,6 +78,7 @@ public class MainActivity extends AppCompatActivity
         konto = (TextView) findViewById(R.id.textView2);
         przypomnienie = (TextView) findViewById(R.id.textView4);
 
+
         potwierdz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,6 +95,7 @@ public class MainActivity extends AppCompatActivity
                 napis_user.setVisibility(view.VISIBLE);
                 login.setText("");
                 haslo.setText("");
+
             }
         });
 
@@ -120,6 +128,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
+
 /*
         konto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,7 +146,33 @@ public class MainActivity extends AppCompatActivity
         });
 
 */
+
+
     }
+    @Override
+    public void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -162,12 +198,9 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-      //  if (id == R.id.action_settings) {
-         //   return true;
-      //  }
 
-        return super.onOptionsItemSelected(item);
+
+    return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -188,7 +221,11 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_send) {
 
+
         } else if (id == R.id.nev_manage1) {
+            Uri uri = Uri.parse("http://www.wp.com"); // missing 'http://' will cause crashed
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
 
         }
 

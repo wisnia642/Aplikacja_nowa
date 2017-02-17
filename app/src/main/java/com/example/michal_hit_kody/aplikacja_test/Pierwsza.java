@@ -28,6 +28,7 @@ public class Pierwsza extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // przejście do następnego layout'u
+                startActivity(new Intent(Pierwsza.this, Druga.class));
             }
         });
 
