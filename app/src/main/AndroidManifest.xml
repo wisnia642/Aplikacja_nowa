@@ -3,10 +3,9 @@
     package="com.example.michal_hit_kody.aplikacja_test">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <supports-screens
         android:largeScreens="true"
@@ -32,7 +31,15 @@
         </activity>
         <activity android:name=".Pierwsza" />
         <activity android:name=".Druga" />
-        <activity android:name=".Trzecia"></activity>
+        <activity android:name=".Trzecia" />
+        <activity
+            android:name=".Przyp_pass"
+            android:label="@string/title_activity_przyp_pass"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Nowe_konto"
+            android:label="@string/title_activity_nowe_konto"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
