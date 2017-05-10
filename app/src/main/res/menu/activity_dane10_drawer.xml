@@ -9,6 +9,10 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Wyloguj" />
         <item
+            android:id="@+id/nav_gallery1"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Główne menu" />
+        <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Konto"

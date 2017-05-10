@@ -4,8 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <supports-screens
         android:largeScreens="true"
@@ -29,16 +30,81 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Pierwsza" />
-        <activity android:name=".Druga" />
-        <activity android:name=".Trzecia" />
         <activity
             android:name=".Przyp_pass"
             android:label="@string/title_activity_przyp_pass"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".Glowne_menu"
+            android:label="@string/title_activity_glowne_menu"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".Nowe_konto"
             android:label="@string/title_activity_nowe_konto"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Ustawienia"
+            android:label="@string/title_activity_ustawienia"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Dane1"
+            android:label="@string/title_activity_dane1"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Dane2"
+            android:label="@string/title_activity_dane2"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Dane3"
+            android:label="@string/title_activity_dane3"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Dane4"
+            android:label="@string/title_activity_dane4"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Dane5"
+            android:label="@string/title_activity_dane5"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Dane6"
+            android:label="@string/title_activity_dane6"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Dane7"
+            android:label="@string/title_activity_dane7"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Dane8"
+            android:label="@string/title_activity_dane8"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Dane9"
+            android:label="@string/title_activity_dane9"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Dane10"
+            android:label="@string/title_activity_dane10"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Dane11"
+            android:label="@string/title_activity_dane11"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Dane12"
+            android:label="@string/title_activity_dane12"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Koniec"
+            android:label="@string/title_activity_koniec"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SendHelp"
+            android:label="@string/title_activity_send_help"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Podglad"
+            android:label="@string/title_activity_podglad"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
