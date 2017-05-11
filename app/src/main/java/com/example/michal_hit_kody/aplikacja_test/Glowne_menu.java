@@ -662,79 +662,76 @@ public class Glowne_menu extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.app_bar_search) {
-            // wylogowanie uzytkownika
-
-            Intent c = new Intent(Glowne_menu.this, MainActivity.class);
-            startActivity(c);
-
-
-        } else if (id == R.id.nav_gallery) {
-            // podglad dodanych rekordow
-            Intent c = new Intent(Glowne_menu.this, Podglad.class);
-            startActivity(c);
-
-
-        } else if (id == R.id.nav_slideshow) {
-            // edytowanie hasla lub emaila
-            connect();
-            if(polaczenie == 1) {
-                Intent c = new Intent(Glowne_menu.this, Ustawienia.class);
+        switch (id)
+        {
+            case R.id.app_bar_search:
+                Intent c = new Intent(Glowne_menu.this, MainActivity.class);
                 startActivity(c);
-            }else
-            {
-                showToast("Musisz mieć podłączenie do internetu, aby przejsc do ustawien ");
-            }
+                break;
+            case  R.id.nav_gallery:
+                Intent d = new Intent(Glowne_menu.this, Podglad.class);
+                startActivity(d);
+                break;
+            case R.id.nav_slideshow:
+                // edytowanie hasla lub emaila
+                connect();
+                if(polaczenie == 1) {
+                    Intent e = new Intent(Glowne_menu.this, Ustawienia.class);
+                    startActivity(e);
+                }else
+                {
+                    showToast("Musisz mieć podłączenie do internetu, aby przejsc do ustawien ");
+                }
+                break;
+            case R.id.nav_manage:
 
+                //zapis do PDF
+                connect();
+                if(polaczenie == 1) {
 
-        } else if (id == R.id.nav_manage) {
-            //zapis do PDF
-            connect();
-            if(polaczenie == 1) {
+                    View popUpView = getLayoutInflater().inflate(R.layout.mpoup, null);
+                    // inflating popup layout
+                    mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                    //Creation of popup
+                    mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+                    mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
 
-                View popUpView = getLayoutInflater().inflate(R.layout.mpoup, null);
-                // inflating popup layout
-                mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-                //Creation of popup
-                mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
-                mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+                    Button download = (Button) popUpView.findViewById(R.id.button13);
+                    Button send_email = (Button) popUpView.findViewById(R.id.button60);
+                    TextView tekst = (TextView) popUpView.findViewById(R.id.textView146);
+                    tekst.setText("Zapis danych do PDF");
 
-                Button download = (Button) popUpView.findViewById(R.id.button13);
-                Button send_email = (Button) popUpView.findViewById(R.id.button60);
-                TextView tekst = (TextView) popUpView.findViewById(R.id.textView146);
-                tekst.setText("Zapis danych do PDF");
+                    download.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
 
-                download.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                            //zapis pliku do pdf
+                            createpdf();
 
-                        //zapis pliku do pdf
-                        createpdf();
+                            showToast("Plik pdf. został zapisany na karcie SD");
 
-                        showToast("Plik pdf. został zapisany na karcie SD");
+                            mpopup.dismiss();
+                        }
+                    });
 
-                        mpopup.dismiss();
-                    }
-                });
+                    send_email.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //Wysyłanie emaila z załącznikiem
+                            createpdf();
+                            attechement_msg="PDF";
+                            sendemail1();
+                            mpopup.dismiss();
+                        }
+                    });
 
-                send_email.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //Wysyłanie emaila z załącznikiem
-                        createpdf();
-                        attechement_msg="PDF";
-                        sendemail1();
-                        mpopup.dismiss();
-                    }
-                });
-
-            }else
-            {
-                showToast("Musisz mieć podłączenie do internetu, aby przejsc do PDF ");
-            }
-
-        } else if (id == R.id.nev_manage1) {
-            //zapis do EXCEL
+                }else
+                {
+                    showToast("Musisz mieć podłączenie do internetu, aby przejsc do PDF ");
+                }
+                break;
+            case  R.id.nev_manage1:
+                //zapis do EXCEL
                 connect();
                 if(polaczenie == 1) {
                     View popUpView = getLayoutInflater().inflate(R.layout.mpoup, null);
@@ -783,47 +780,48 @@ public class Glowne_menu extends AppCompatActivity
                 {
                     showToast("Musisz mieć podłączenie do internetu, aby przejsc do EXCEL ");
                 }
+                break;
+            case R.id.nav_help:
+                //zapis do EXCEL
+                connect();
+                if(polaczenie == 1) {
+                    Intent f = new Intent(Glowne_menu.this, SendHelp.class);
+                    startActivity(f);
+                }else
+                {
+                    showToast("Musisz mieć podłączenie do internetu, aby przejsc do napisz do nas ");
+                }
+                break;
+            case R.id.nav_share:
+                connect();
+                if(polaczenie == 1) {
+                    //pierwszy link
+                    Uri uri = Uri.parse(link1); // missing 'http://' will cause crashed
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }else
+                {
+                    showToast("Musisz mieć podłączenie do internetu, aby przejsc do strony ");
+                }
+                break;
+            case R.id.nav_send:
+                connect();
+                if(polaczenie == 1) {
+                    //drugi link
+                    Uri uri = Uri.parse(link2); // missing 'http://' will cause crashed
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }else
+                {
+                    showToast("Musisz mieć podłączenie do internetu, aby przejsc do strony ");
+                }
+                break;
 
-        } else if (id == R.id.nav_help) {
-            //zapis do EXCEL
-            connect();
-            if(polaczenie == 1) {
-                Intent c = new Intent(Glowne_menu.this, SendHelp.class);
-                startActivity(c);
-            }else
-            {
-                showToast("Musisz mieć podłączenie do internetu, aby przejsc do napisz do nas ");
-            }
-
-
-        } else if (id == R.id.nav_share) {
-            connect();
-            if(polaczenie == 1) {
-                //pierwszy link
-                Uri uri = Uri.parse(link1); // missing 'http://' will cause crashed
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            }else
-            {
-                showToast("Musisz mieć podłączenie do internetu, aby przejsc do strony ");
-            }
-
-        } else if (id == R.id.nav_send) {
-            connect();
-            if(polaczenie == 1) {
-                //drugi link
-                Uri uri = Uri.parse(link2); // missing 'http://' will cause crashed
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            }else
-            {
-                showToast("Musisz mieć podłączenie do internetu, aby przejsc do strony ");
-            }
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+    //    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+      //  drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }

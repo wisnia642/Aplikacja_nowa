@@ -281,7 +281,7 @@ public class Podglad extends AppCompatActivity
                     c = sampleDB.rawQuery("SELECT * FROM '" + uzytkownik + "'", null);
                 }else
                 {
-                    c = sampleDB.rawQuery("select * from '"+uzytkownik+"' where Data_Godzina BETWEEN '" + data_1+" 00:00" + "' AND '" + data_2+" 24:00" + "'", null);
+                    c = sampleDB.rawQuery("select * from '"+uzytkownik+"' where Data_Godzina BETWEEN '" +data_1+" 00:00" + "' AND '" +data_2+" 23:59" + "'", null);
                 }
                 while (c.moveToNext()) {
                     String zm = String.valueOf(c.getString(1));
@@ -1056,8 +1056,6 @@ public class Podglad extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.app_bar_search) {
-            // wylogowanie uzytkownika
-           // UpdateSql1wyloguj();
 
             Intent c = new Intent(Podglad.this, MainActivity.class);
             startActivity(c);
@@ -1228,8 +1226,6 @@ public class Podglad extends AppCompatActivity
 
     }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }

@@ -360,7 +360,9 @@ public class Ustawienia extends AppCompatActivity
                 connect();
                 if (polaczenie == 1) {
                     try {
-                        dane_user= uzytkonik.getText().toString();
+
+                        String input = uzytkonik.getText().toString();
+                        dane_user=  input.replaceAll("[\\-\\+\\.\\^:+!;,@._*#$%&]","");
                         dane_pass = haslo.getText().toString();
                         dane_email = email_txt.getText().toString();
                         dane_pass1 = haslo1.getText().toString();
@@ -411,7 +413,7 @@ public class Ustawienia extends AppCompatActivity
                             showToast("Uzupełnij wszystkie pola");
                         } else if (Warunek_do_przejścia == 0) {
 
-                            showToast("Błędny użytkownik lub hasło");
+                            showToast("Błędny email lub hasło");
 
                         }
                     } catch (Exception e) {
@@ -526,8 +528,6 @@ public class Ustawienia extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }

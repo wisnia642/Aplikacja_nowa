@@ -613,7 +613,7 @@ public class Koniec extends AppCompatActivity
                     "'"+dane7+"','"+dane8+"','"+dane9+"','"+dane10+"','"+dane11+"','"+dane12+"') ");
             sampleDB.close();
         } catch (Exception e) {
-           //  showToast(""+e);
+             Log.i("blad",uzytkownik+" "+e);
         }
     }
 
@@ -852,11 +852,10 @@ public class Koniec extends AppCompatActivity
            // showToast("0");
             //odczytywanie danych z tabeli uzytkownik
             Read_Login1();
-           // Log.i("blad","poz"+pozycja);
+
             Read_data_SqlLigt();
         }else
         {
-          //  showToast("1");
             //odczytywanie danych  z tabeli edit
             Read_Login();
         }
@@ -1113,8 +1112,6 @@ public class Koniec extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.app_bar_search) {
-            // wylogowanie uzytkownika
-           //  UpdateSql1wyloguj();
 
             Intent c = new Intent(Koniec.this, MainActivity.class);
             startActivity(c);
@@ -1282,8 +1279,6 @@ public class Koniec extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }

@@ -251,8 +251,7 @@ public class MainActivity extends AppCompatActivity
     public void zapamietanie_hasla() {
         ToDataBase2();
         try {
-            user_spr = login.getText().toString();
-            pass_spr = haslo.getText().toString();
+
             SQLiteDatabase sampleDB1 = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
             sampleDB1.execSQL("Delete from pamiec");
             sampleDB1.execSQL("INSERT INTO pamiec (user,pass,status) VALUES ('" + user_spr + "','" + pass_spr + "','1')");
@@ -264,7 +263,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void nie_pamietanie_hasla() {
-        ToDataBase2();
         try {
             SQLiteDatabase sampleDB1 = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
             sampleDB1.execSQL("Delete from pamiec");
@@ -346,7 +344,7 @@ public class MainActivity extends AppCompatActivity
             }
         }
     }
-*/
+
 
     public void UpdateMySql(){
 
@@ -374,6 +372,7 @@ public class MainActivity extends AppCompatActivity
             }
         }
     }
+*/
 
     private void Read_Login_SqlLigt() {
         x = 0;
@@ -440,8 +439,6 @@ public class MainActivity extends AppCompatActivity
                 Log.i("myTag", "1" + e1);
             }
 
-            user_spr = login.getText().toString();
-            pass_spr = haslo.getText().toString();
             Log.i("baza",""+user_spr+"  "+pass_spr);
             String sql = ("select * from users where Uzytkownik='"+user_spr+"' and Haslo='"+pass_spr+"' ");
 
@@ -545,7 +542,7 @@ public class MainActivity extends AppCompatActivity
 
     //aktualizowanie bazy danych sqlight
     public void insertuser() {
-        //ToDataBase1();
+        ToDataBase();
         y = y + 1;
         Hash();
         try {
@@ -564,7 +561,7 @@ public class MainActivity extends AppCompatActivity
 
         if (z < m) { //z jest mniejsze od m
             try {
-              //  ToDataBaseSqllight();
+                ToDataBaseSqllight();
                 SQLiteDatabase sampleDB1 = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
                 sampleDB1.execSQL("delete from '" + user_spr + "'");
@@ -865,13 +862,8 @@ public class MainActivity extends AppCompatActivity
 
 
         //sprawdzanie połączenia do bazy danych
-        connect();
-        //  InsertLoginDataMysql();
-
-        if (polaczenie == 1) {
-            selectmysqlustawienia();
             zapamietanie_ustawienia();
-        }
+
 
         //odczytywanie czy uzytkownik zapamietal haslo czy nie
         checkbox1();
@@ -893,7 +885,8 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
 
                 connect();
-                user_spr = login.getText().toString();
+                String input = login.getText().toString();
+                user_spr = input.replaceAll("[\\-\\+\\.\\^:+!;,@._*#$%&]","");
                 pass_spr = haslo.getText().toString();
                 if (polaczenie == 0) {
                    // showToast("polaczenie");
@@ -905,12 +898,9 @@ public class MainActivity extends AppCompatActivity
                         //sprawdza czy uzytkonik uzupelnil wszystkie pola
                         Warunek_do_przejścia = 1;
 
-
-                            //tworzenie tabeli uzytkownik
-                            ToDataBaseSqllight();
-
                         //tworzenie i czyszczenie tabeli edit
                         InsertLight();
+
 
                         if (znacznik.isChecked()) {
                             // showToast("hasło zapamiętane");
@@ -922,6 +912,9 @@ public class MainActivity extends AppCompatActivity
                         if (aktualizacja.isChecked()) {
                             aktualizacja_danych();
                         }
+
+                            //sprawdza czy uzytkownik został poprawnie dodany do tabeli uzytkownik
+                            insertuser();
 
                         //ustawia status=1 w tabeli uzytkownik na dwoch bazach
                        // UpdateSqlLight();
@@ -954,9 +947,6 @@ public class MainActivity extends AppCompatActivity
                             email_sql = email;
 
 
-                                //tworzenie tabeli uzytkownik
-                                ToDataBaseSqllight();
-
                             //tworzenie i czyszczenie tabeli edit
                             InsertLight();
 
@@ -981,6 +971,8 @@ public class MainActivity extends AppCompatActivity
                           //  UpdateSqlLight();
                             // showToast("dupa");
                             //   spinner.setVisibility(View.INVISIBLE);
+
+
                             Intent c = new Intent(MainActivity.this, Glowne_menu.class);
                             startActivity(c);
 
@@ -1170,8 +1162,6 @@ public class MainActivity extends AppCompatActivity
                 }
 
             }
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            drawer.closeDrawer(GravityCompat.START);
             return true;
         }
     }
