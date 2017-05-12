@@ -281,8 +281,12 @@ public class Podglad extends AppCompatActivity
                     c = sampleDB.rawQuery("SELECT * FROM '" + uzytkownik + "'", null);
                 }else
                 {
-                    c = sampleDB.rawQuery("select * from '"+uzytkownik+"' where Data_Godzina BETWEEN '" +data_1+" 00:00" + "' AND '" +data_2+" 23:59" + "'", null);
+                    c = sampleDB.rawQuery("select * from '"+uzytkownik+"' where Data_Godzina BETWEEN '" +data_1+"  00 : 00" + "' AND '" +data_2+"  24 : 00" + "'", null);
+
                 }
+
+                Log.i("blad","data "+ data_1+" "+data_2);
+
                 while (c.moveToNext()) {
                     String zm = String.valueOf(c.getString(1));
                     if (zm != null) {
@@ -444,7 +448,7 @@ public class Podglad extends AppCompatActivity
                  curCSV = sampleDB.rawQuery("SELECT * FROM '" + uzytkownik + "'", null);
             }else
             {
-                 curCSV = sampleDB.rawQuery("select * from '"+uzytkownik+"' where Data_Godzina BETWEEN '" + data_1+" 00:00" + "' AND '" + data_2+" 24:00" + "'", null);
+                 curCSV = sampleDB.rawQuery("select * from '"+uzytkownik+"' where Data_Godzina BETWEEN '" + data_1+"  00:00" + "' AND '" + data_2+"  24:00" + "'", null);
             }
             // Cursor curCSV = sql_db.rawQuery("SELECT * FROM "+CredentialDb.TABLE_NAME,null);
 
@@ -722,8 +726,8 @@ public class Podglad extends AppCompatActivity
         try {
             data_1 = data1.getText().toString();
             data_2 = data2.getText().toString();
-            Cursor c = sampleDB.rawQuery("select * from '"+uzytkownik+"' where Data_Godzina BETWEEN '" + data_1+" 00:00" + "' AND '" + data_2+" 24:00" + "'", null);
-
+            Cursor c = sampleDB.rawQuery("select * from '"+uzytkownik+"' where Data_Godzina BETWEEN '" + data_1+"  00 : 00" + "' AND '" + data_2+"  24 : 00" + "'", null);
+            Log.i("blad","data "+ data_1+" 00 : 00"+"     "+data_2+" 24 : 00");
             while (c.moveToNext()) {
                 String zm = String.valueOf(c.getString(1));
                 if (zm != null) {
@@ -756,7 +760,7 @@ public class Podglad extends AppCompatActivity
             }
 
 
-            String sql = ("select * from "+uzytkownik+" where Data_Godzina BETWEEN '" + data_1+" 00:00" + "' AND '" + data_2+" 24:00" + "'");
+            String sql = ("select * from "+uzytkownik+" where Data_Godzina BETWEEN '" + data_1+"  00:00" + "' AND '" + data_2+"  24:00" + "'");
 
             try {
                 rs = st.executeQuery(sql);

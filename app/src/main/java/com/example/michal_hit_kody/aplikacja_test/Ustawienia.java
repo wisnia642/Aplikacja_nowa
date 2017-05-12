@@ -162,8 +162,6 @@ public class Ustawienia extends AppCompatActivity
                 e1.printStackTrace();
                 Log.i("myTag", "1" + e1);
             }
-            dane_user= uzytkonik.getText().toString();
-            dane_pass = haslo.getText().toString();
             String sql = ("select * from users where Uzytkownik='"+dane_user+"' and Haslo='"+dane_pass+"'");
 
             try {
@@ -245,7 +243,7 @@ public class Ustawienia extends AppCompatActivity
 
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
-            sampleDB.execSQL("UPDATE users SET Email=('"+dane_email+"') WHERE Uzytkownik='" + dane_user + "'");
+            sampleDB.execSQL("UPDATE users SET Email=('"+dane_email+"'),Uzytkownik=('"+dane_email+"') WHERE Uzytkownik='" + dane_user + "'");
             sampleDB.close();
         } catch (Exception e) {
 
@@ -261,7 +259,7 @@ public class Ustawienia extends AppCompatActivity
             }
 
 
-            String sql1 = "UPDATE users SET Email = ('"+dane_email+"') WHERE Uzytkownik = '" + dane_user + "'";
+            String sql1 = "UPDATE users SET Email = ('"+dane_email+"'),Uzytkownik=('"+dane_email+"') WHERE Uzytkownik = '" + dane_user + "'";
 
             try {
                 st.executeUpdate(sql1);
@@ -418,7 +416,8 @@ public class Ustawienia extends AppCompatActivity
                         }
                     } catch (Exception e) {
 
-                        showToast("błąd wczytywania");
+                       Log.i("blad","ustawienia" +e);
+                        showToast("Błędny email lub hasło");
                     }
                 } else
 
