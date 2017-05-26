@@ -97,7 +97,7 @@ public class Koniec extends AppCompatActivity
     int x=0,y=0,Warunek_do_przejścia=0,polaczenie=0,z=2;
 
     String dane0,dane1,dane2,dane3,dane4,dane5,dane6,dane7,dane8,dane9,dane10,dane11,dane12;
-    String uzytkownik,kiedy,pozycja,link1,link2,login,czas_dok;
+    String uzytkownik,kiedy,pozycja,link1,link2,login,czas_dok,data_kiedy;
 
     private static final String SAMPLE_DB_NAME = "Baza";
     private static final String SAMPLE_TABLE_NAME = "Karta";
@@ -527,7 +527,7 @@ public class Koniec extends AppCompatActivity
         SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
 
         try {
-            Cursor c = sampleDB.rawQuery("select * from '"+uzytkownik+"' where Data_Godzina='"+pozycja+"'", null);
+            Cursor c = sampleDB.rawQuery("select * from '"+uzytkownik+"' where Kiedy='"+data_kiedy+"'", null);
 
             while (c.moveToNext()) {
                 String zm = String.valueOf(c.getString(1));
@@ -845,14 +845,13 @@ public class Koniec extends AppCompatActivity
 
 
         //pobieranie danych z sqlight
-        pozycja = getIntent().getStringExtra("EXTRA_SESSION");
+        data_kiedy = getIntent().getStringExtra("EXTRA_SESSION");
       // uzytkownik = getIntent().getStringExtra("USER");
-        if(pozycja!=null)
+        if(data_kiedy!=null)
         {
            // showToast("0");
             //odczytywanie danych z tabeli uzytkownik
             Read_Login1();
-
             Read_data_SqlLigt();
         }else
         {
@@ -886,73 +885,73 @@ public class Koniec extends AppCompatActivity
                     case 0:
                         Intent intent = new Intent(getBaseContext(), Dane1.class);
                         intent.putExtra("EXTRA_SESSION_ID", dane1);
-                        intent.putExtra("EXTRA_SESSION", pozycja);
+                        intent.putExtra("EXTRA_SESSION", data_kiedy);
                         startActivity(intent);
                         break;
                     case 1:
                         Intent intent2 = new Intent(getBaseContext(), Dane2.class);
                         intent2.putExtra("EXTRA_SESSION_ID", dane2);
-                        intent2.putExtra("EXTRA_SESSION", pozycja);
+                        intent2.putExtra("EXTRA_SESSION", data_kiedy);
                         startActivity(intent2);
                         break;
                     case 2:
                         Intent intent3 = new Intent(getBaseContext(), Dane3.class);
                         intent3.putExtra("EXTRA_SESSION_ID", dane3);
-                        intent3.putExtra("EXTRA_SESSION", pozycja);
+                        intent3.putExtra("EXTRA_SESSION", data_kiedy);
                         startActivity(intent3);
                         break;
                     case 3:
                         Intent intent4 = new Intent(getBaseContext(), Dane4.class);
                         intent4.putExtra("EXTRA_SESSION_ID", dane4);
-                        intent4.putExtra("EXTRA_SESSION", pozycja);
+                        intent4.putExtra("EXTRA_SESSION", data_kiedy);
                         startActivity(intent4);
                         break;
                     case 4:
                         Intent intent5 = new Intent(getBaseContext(), Dane5.class);
                         intent5.putExtra("EXTRA_SESSION_ID", dane5);
-                        intent5.putExtra("EXTRA_SESSION", pozycja);
+                        intent5.putExtra("EXTRA_SESSION", data_kiedy);
                         startActivity(intent5);
                         break;
                     case 5:
                         Intent intent6 = new Intent(getBaseContext(), Dane6.class);
                         intent6.putExtra("EXTRA_SESSION_ID", dane6);
-                        intent6.putExtra("EXTRA_SESSION", pozycja);
+                        intent6.putExtra("EXTRA_SESSION", data_kiedy);
                         startActivity(intent6);
                         break;
                     case 6:
                         Intent intent7 = new Intent(getBaseContext(), Dane7.class);
                         intent7.putExtra("EXTRA_SESSION_ID", dane7);
-                        intent7.putExtra("EXTRA_SESSION", pozycja);
+                        intent7.putExtra("EXTRA_SESSION", data_kiedy);
                         startActivity(intent7);
                         break;
                     case 7:
                         Intent intent8 = new Intent(getBaseContext(), Dane8.class);
                         intent8.putExtra("EXTRA_SESSION_ID", dane8);
-                        intent8.putExtra("EXTRA_SESSION", pozycja);
+                        intent8.putExtra("EXTRA_SESSION", data_kiedy);
                         startActivity(intent8);
                         break;
                     case 8:
                         Intent intent9 = new Intent(getBaseContext(), Dane9.class);
                         intent9.putExtra("EXTRA_SESSION_ID", dane9);
-                        intent9.putExtra("EXTRA_SESSION", pozycja);
+                        intent9.putExtra("EXTRA_SESSION", data_kiedy);
                         startActivity(intent9);
                         break;
                     case 9:
                         Intent intent10 = new Intent(getBaseContext(), Dane10.class);
                         intent10.putExtra("EXTRA_SESSION_ID", dane10);
-                        intent10.putExtra("EXTRA_SESSION", pozycja);
+                        intent10.putExtra("EXTRA_SESSION", data_kiedy);
                         startActivity(intent10);
                         break;
                     case 10:
                         Intent intent11 = new Intent(getBaseContext(), Dane11.class);
                         intent11.putExtra("EXTRA_SESSION_ID", dane11);
-                        intent11.putExtra("EXTRA_SESSION", pozycja);
+                        intent11.putExtra("EXTRA_SESSION", data_kiedy);
                         startActivity(intent11);
                         break;
                     case 11:
                         Intent intent12 = new Intent(getBaseContext(), Dane12.class);
                         intent12.putExtra("EXTRA_SESSION_ID", dane12);
-                        intent12.putExtra("EXTRA_SESSION", pozycja);
+                        intent12.putExtra("EXTRA_SESSION", data_kiedy);
                         startActivity(intent12);
                         break;
 
@@ -967,7 +966,7 @@ public class Koniec extends AppCompatActivity
             @Override
                 public void onClick(View v) {
 
-                if(pozycja!=null)
+                if(data_kiedy!=null)
                 {
                     Intent c = new Intent(Koniec.this, Podglad.class);
                     startActivity(c);
@@ -1008,7 +1007,7 @@ public class Koniec extends AppCompatActivity
                  //   ToDataBaseSqllight();
                  //   TodataBaseMysql();
 
-                    if (pozycja != null) {
+                    if (data_kiedy != null) {
                         Intent c = new Intent(Koniec.this, Podglad.class);
                         c.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(c);
@@ -1035,7 +1034,7 @@ public class Koniec extends AppCompatActivity
 
                     ToDataBaseSqllight();
 
-                    if (pozycja != null) {
+                    if (data_kiedy != null) {
                         Intent c = new Intent(Koniec.this, Podglad.class);
                         c.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(c);

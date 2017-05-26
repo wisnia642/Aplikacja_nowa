@@ -509,7 +509,7 @@ public class Dane4 extends AppCompatActivity
             }
 
 
-            String sql1 ="update "+uzytkownik+" set Powierzchnia='"+data+"' where Data_godzina='"+p+"'";
+            String sql1 ="update "+uzytkownik+" set Powierzchnia='"+data+"' where Kiedy='"+p+"'";
 
             try {
                 st.executeUpdate(sql1);
@@ -545,7 +545,7 @@ public class Dane4 extends AppCompatActivity
 
             data = dane.getText().toString();
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null); //%032x44047210810492668751
-            sampleDB.execSQL("update '"+uzytkownik+"' set Powierzchnia='"+data+"' where Data_godzina='"+p+"' ");
+            sampleDB.execSQL("update '"+uzytkownik+"' set Powierzchnia='"+data+"' where Kiedy='"+p+"' ");
             sampleDB.close();
         } catch (Exception e) {
             //    showToast(""+e);
@@ -756,176 +756,162 @@ public class Dane4 extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.app_bar_search) {
-            // wylogowanie uzytkownika
-            UpdateSql1wyloguj();
-
-            Intent c = new Intent(Dane4.this, MainActivity.class);
-            startActivity(c);
-
-        } else if (id == R.id.nav_gallery) {
-            // podglad dodanych rekordow
-
-            Intent c = new Intent(Dane4.this, Podglad.class);
-            startActivity(c);
-
-
-        } else if (id == R.id.nav_slideshow) {
-            // edytowanie hasla lub emaila
-            connect();
-            if(polaczenie == 1) {
-                Intent c = new Intent(Dane4.this, Ustawienia.class);
+        switch (id)
+        {
+            case R.id.app_bar_search:
+                Intent c = new Intent(Dane4.this, MainActivity.class);
+                c.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(c);
-            }else
-            {
-                showToast("Musisz mieć podłączenie do internetu, aby przejsc do ustawien ");
-            }
+                finish();
+                break;
+            case  R.id.nav_gallery:
+                Intent d = new Intent(Dane4.this, Podglad.class);
+                startActivity(d);
+                break;
+            case R.id.nav_slideshow:
+                // edytowanie hasla lub emaila
+                connect();
+                if(polaczenie == 1) {
+                    Intent e = new Intent(Dane4.this, Ustawienia.class);
+                    startActivity(e);
+                }else
+                {
+                    showToast("Musisz mieć podłączenie do internetu, aby przejsc do ustawien ");
+                }
+                break;
+            case R.id.nav_manage:
 
+                //zapis do PDF
+                connect();
+                if(polaczenie == 1) {
 
-        } else if (id == R.id.nav_manage) {
-            //zapis do PDF
-            connect();
-            if(polaczenie == 1) {
+                    View popUpView = getLayoutInflater().inflate(R.layout.mpoup, null);
+                    // inflating popup layout
+                    mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                    //Creation of popup
+                    mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+                    mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
 
-                View popUpView = getLayoutInflater().inflate(R.layout.mpoup, null);
-                // inflating popup layout
-                mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-                //Creation of popup
-                mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
-                mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+                    Button download = (Button) popUpView.findViewById(R.id.button13);
+                    Button send_email = (Button) popUpView.findViewById(R.id.button60);
+                    TextView tekst = (TextView) popUpView.findViewById(R.id.textView146);
+                    tekst.setText("Zapis danych do PDF");
 
-                Button download = (Button) popUpView.findViewById(R.id.button13);
-                Button send_email = (Button) popUpView.findViewById(R.id.button60);
-                TextView tekst = (TextView) popUpView.findViewById(R.id.textView146);
-                tekst.setText("Zapis danych do PDF");
+                    download.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
 
-                download.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                            //zapis pliku do pdf
+                            createpdf();
 
-                        //zapis pliku do pdf
-                        createpdf();
+                            showToast("Plik pdf. został zapisany na karcie SD");
 
-                        showToast("Plik pdf. został zapisany na karcie SD");
+                            mpopup.dismiss();
+                        }
+                    });
 
-                        mpopup.dismiss();
-                    }
-                });
+                    send_email.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //Wysyłanie emaila z załącznikiem
+                            createpdf();
+                            attechement_msg="PDF";
+                            sendemail1();
+                            mpopup.dismiss();
+                        }
+                    });
 
-                send_email.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //Wysyłanie emaila z załącznikiem
-                        createpdf();
-                        attechement_msg="PDF";
-                        sendemail1();
-                        mpopup.dismiss();
-                    }
-                });
+                }else
+                {
+                    showToast("Musisz mieć podłączenie do internetu, aby przejsc do PDF ");
+                }
+                break;
+            case  R.id.nev_manage1:
+                //zapis do EXCEL
+                connect();
+                if(polaczenie == 1) {
+                    View popUpView = getLayoutInflater().inflate(R.layout.mpoup, null);
+                    // inflating popup layout
+                    mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                    //Creation of popup
+                    mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
+                    mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
 
-            }else
-            {
-                showToast("Musisz mieć podłączenie do internetu, aby przejsc do PDF ");
-            }
+                    Button download = (Button) popUpView.findViewById(R.id.button13);
+                    Button send_email = (Button) popUpView.findViewById(R.id.button60);
+                    TextView tekst = (TextView) popUpView.findViewById(R.id.textView146);
+                    tekst.setText("Zapis danych do XLS");
 
-        } else if (id == R.id.nev_manage1) {
-            //zapis do EXCEL
-            connect();
-            if(polaczenie == 1) {
-                View popUpView = getLayoutInflater().inflate(R.layout.mpoup, null);
-                // inflating popup layout
-                mpopup = new PopupWindow(popUpView, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-                //Creation of popup
-                mpopup.setAnimationStyle(android.R.style.Animation_Dialog);
-                mpopup.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+                    download.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
 
-                Button download = (Button) popUpView.findViewById(R.id.button13);
-                Button send_email = (Button) popUpView.findViewById(R.id.button60);
-                TextView tekst = (TextView) popUpView.findViewById(R.id.textView146);
-                tekst.setText("Zapis danych do XLS");
+                            //zapis pliku do csc
+                            exportDataBaseIntoCSV();
 
-                download.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                            //zapis do pliku xls
+                            pdf1();
 
-                        //zapis pliku do csc
-                        exportDataBaseIntoCSV();
+                            showToast("Plik xls. został zapisany na karcie SD");
 
-                        //zapis do pliku xls
-                        pdf1();
+                            mpopup.dismiss();
+                        }
+                    });
 
-                        showToast("Plik xls. został zapisany na karcie SD");
+                    send_email.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //Wysyłanie emaila z załącznikiem
 
-                        mpopup.dismiss();
-                    }
-                });
-
-                send_email.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //Wysyłanie emaila z załącznikiem
-
-                        //zapis pliku do csc
-                        exportDataBaseIntoCSV();
-                        //zapis do pliku xls
-                        pdf1();
-                        attechement_msg="XLS";
-                        sendemail1();
-                        mpopup.dismiss();
-                    }
-                });
-            }else
-            {
-                showToast("Musisz mieć podłączenie do internetu, aby przejsc do EXCEL ");
-            }
-
-
-        } else if (id == R.id.nav_help) {
-
-            //napisanie emaila do pomocy
-            connect();
-            if(polaczenie == 1) {
-                Intent c = new Intent(Dane4.this, SendHelp.class);
-                startActivity(c);
-            }else
-            {
-                showToast("Musisz mieć podłączenie do internetu, aby przejsc do napisz do nas ");
-            }
-
-
-        } else if (id == R.id.nav_share) {
-
-            connect();
-            if(polaczenie == 1) {
-                //pierwszy link
-                Uri uri = Uri.parse(link1); // missing 'http://' will cause crashed
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            }else
-            {
-                showToast("Musisz mieć podłączenie do internetu, aby przejsc do strony ");
-            }
-
-        } else if (id == R.id.nav_send) {
-
-            connect();
-            if(polaczenie == 1) {
-                //drugi link
-                Uri uri = Uri.parse(link2); // missing 'http://' will cause crashed
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            }else
-            {
-                showToast("Musisz mieć podłączenie do internetu, aby przejsc do strony ");
-            }
-
-        }
-        else if (id == R.id.nav_gallery1) {
-
-            //napisanie emaila do pomocy
-
-            Intent c = new Intent(Dane4.this, Glowne_menu.class);
-            startActivity(c);
+                            //zapis pliku do csc
+                            exportDataBaseIntoCSV();
+                            //zapis do pliku xls
+                            pdf1();
+                            attechement_msg="XLS";
+                            sendemail1();
+                            mpopup.dismiss();
+                        }
+                    });
+                }else
+                {
+                    showToast("Musisz mieć podłączenie do internetu, aby przejsc do EXCEL ");
+                }
+                break;
+            case R.id.nav_help:
+                //zapis do EXCEL
+                connect();
+                if(polaczenie == 1) {
+                    Intent f = new Intent(Dane4.this, SendHelp.class);
+                    startActivity(f);
+                }else
+                {
+                    showToast("Musisz mieć podłączenie do internetu, aby przejsc do napisz do nas ");
+                }
+                break;
+            case R.id.nav_share:
+                connect();
+                if(polaczenie == 1) {
+                    //pierwszy link
+                    Uri uri = Uri.parse(link1); // missing 'http://' will cause crashed
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }else
+                {
+                    showToast("Musisz mieć podłączenie do internetu, aby przejsc do strony ");
+                }
+                break;
+            case R.id.nav_send:
+                connect();
+                if(polaczenie == 1) {
+                    //drugi link
+                    Uri uri = Uri.parse(link2); // missing 'http://' will cause crashed
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }else
+                {
+                    showToast("Musisz mieć podłączenie do internetu, aby przejsc do strony ");
+                }
+                break;
 
 
         }
