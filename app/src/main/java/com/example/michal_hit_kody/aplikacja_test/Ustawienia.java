@@ -33,6 +33,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class Ustawienia extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -43,11 +44,14 @@ public class Ustawienia extends AppCompatActivity
     FileInputStream fis = null;
     Connection connection = null;
 
+    int czy_ten_sam;
+    int status;
     String user;
     String pass;
     String email;
+    ArrayList dane_uzytkownik = new ArrayList();
 
-    String dane_user,dane_pass,dane_email,dane_pass1,dane_pass2,link1,link2;
+    String dane_user,dane_pass,dane_email,dane_pass1,dane_pass2,link1,link2,pozycja;
     String hash1;
 
     int x=0,Warunek_do_przejścia=0,polaczenie=0,poprawny_email=0;
@@ -121,7 +125,7 @@ public class Ustawienia extends AppCompatActivity
     private void Hash() {
         try {
             String input = haslo.getText().toString();
-            hash1 = "%032x440472108104" + String.valueOf(input.hashCode());
+            hash1 = "%032x440472108104" + String.valueOf(dane_pass1.hashCode());
 
         } catch (Exception e) {
         }
@@ -140,7 +144,6 @@ public class Ustawienia extends AppCompatActivity
                 String zm = String.valueOf(c.getString(1));
                 if (zm != null) {
                     user[x] = String.valueOf(c.getString(1));
-                    pass[x] = String.valueOf(c.getString(2));
                     x++;
                 }
             }
@@ -152,7 +155,6 @@ public class Ustawienia extends AppCompatActivity
     }
 */
     public void Read_Login_MySql() {
-        x = 0;
         connect();
         if (connection != null) {
 
@@ -180,7 +182,6 @@ public class Ustawienia extends AppCompatActivity
                         user = rs.getString("Uzytkownik");
                         pass = rs.getString("Haslo");
                         email = rs.getString("Email");
-                        x++;
                     }
 
                 }
@@ -202,8 +203,8 @@ public class Ustawienia extends AppCompatActivity
     }
 
     public void UpdateSql1haslo() {
-        ToDataBase();
-        hashCode();
+       // ToDataBase();
+        Hash();
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
             sampleDB.execSQL("UPDATE users SET Haslo=('"+hash1+"') WHERE Uzytkownik='" + dane_user + "'");
@@ -243,7 +244,7 @@ public class Ustawienia extends AppCompatActivity
 
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
-            sampleDB.execSQL("UPDATE users SET Email=('"+dane_email+"'),Uzytkownik=('"+dane_email+"') WHERE Uzytkownik='" + dane_user + "'");
+            sampleDB.execSQL("UPDATE users SET Email=('"+dane_email+"') WHERE Uzytkownik='" + dane_user + "'");
             sampleDB.close();
         } catch (Exception e) {
 
@@ -259,7 +260,7 @@ public class Ustawienia extends AppCompatActivity
             }
 
 
-            String sql1 = "UPDATE users SET Email = ('"+dane_email+"'),Uzytkownik=('"+dane_email+"') WHERE Uzytkownik = '" + dane_user + "'";
+            String sql1 = "UPDATE users SET Email = ('"+dane_email+"') WHERE Uzytkownik = '" + dane_user + "'";
 
             try {
                 st.executeUpdate(sql1);
@@ -330,13 +331,23 @@ public class Ustawienia extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        pozycja = getIntent().getStringExtra("USER");
         ustawienia_SqlLigt();
+
 
         powrot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent c = new Intent(Ustawienia.this, MainActivity.class);
-                startActivity(c);
+
+                if(pozycja!=null)
+                {
+                    Intent c = new Intent(Ustawienia.this, MainActivity.class);
+                    startActivity(c);
+                }else
+                {
+                    Intent c = new Intent(Ustawienia.this, Glowne_menu.class);
+                    startActivity(c);
+                }
             }
         });
 
@@ -367,29 +378,46 @@ public class Ustawienia extends AppCompatActivity
                         dane_pass2 = haslo2.getText().toString();
 
                         Read_Login_MySql();
+                        /*
+                        //sprawdzam czy dany użytkownik już istnieje w sytstemie
+                        czy_ten_sam=0;
+                        status=0;
+                        for (int i = 0; i < x; i=i+0) {
 
-                                Log.i("blad",pass);
+                            if(dane_email.equals(dane_uzytkownik.get(i))) {
+                                czy_ten_sam=1;
+                            }
+
+                            i++;
+                        }
+                        */
                                 if (dane_pass.equals(pass)) {
 
                                     //sprawdzanie czy hasła są takie same update
                                     if(dane_pass1.equals(dane_pass2)){
 
+
+
                                     if(zap_haslo.isChecked())
                                     {
                                         UpdateSql1haslo();
                                         showToast("Hasło zostało zmienione");
+                                        status=0;
                                     }
                                     }else
                                     {
                                         showToast("Hasła nie są takie same");
+                                        status=1;
                                     }
 
                                     if(dane_email!=null) {
 
+
                                         //sprawdza czy email jest poprawny i update
-                                        if (zap_email.isChecked()) {
+                                        if (zap_email.isChecked() ) {
                                             UpdateSql1email();
                                             showToast("Email został zmieniony");
+                                            status=0;
                                         }
                                     }else
                                     {
@@ -400,8 +428,11 @@ public class Ustawienia extends AppCompatActivity
                                     //nie wiem dlaczego to wstawiłem ale ok :p
                                     Warunek_do_przejścia = 1;
 
-                                    Intent c = new Intent(Ustawienia.this, MainActivity.class);
-                                    startActivity(c);
+                                    if(status==0)
+                                    {
+                                        Intent c = new Intent(Ustawienia.this, MainActivity.class);
+                                        startActivity(c);
+                                    }
 
                                 }
 
@@ -416,8 +447,8 @@ public class Ustawienia extends AppCompatActivity
                         }
                     } catch (Exception e) {
 
-                       Log.i("blad","ustawienia" +e);
-                        showToast("Błędny email lub hasło");
+                        Log.i("blad",""+e);
+                        showToast("Błędny email lub hasło1");
                     }
                 } else
 

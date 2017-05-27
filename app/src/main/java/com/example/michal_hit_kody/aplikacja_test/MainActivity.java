@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity
     private void ToDataBase1() {
         try {
             SQLiteDatabase sampleDB = this.openOrCreateDatabase(SAMPLE_DB_NAME, MODE_PRIVATE, null);
-            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS edit (Id VARCHAR,Gatunek VARCHAR,Odmiana VARCHAR,Data_Godzina VARCHAR,Powierzchnia VARCHAR,Nr_Działki VARCHAR," +
+            sampleDB.execSQL("CREATE TABLE IF NOT EXISTS edit (Id VARCHAR, Gatunek VARCHAR,Odmiana VARCHAR,Data_Godzina VARCHAR,Powierzchnia VARCHAR,Nr_Działki VARCHAR," +
                     "Preparat VARCHAR,Dawka VARCHAR,Substancja_czynna VARCHAR,Temperatura VARCHAR,Faza_rozwoju VARCHAR,Przyczyny_zabiegu VARCHAR,Uwagi VARCHAR, Uzytkownik VARCHAR);");
             sampleDB.close();
         } catch (Exception e) {
@@ -602,7 +602,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         if (z > m & polaczenie == 1) {
-
+            ToDataBaseSqllight();
             connect();
 
             if (connection != null) {

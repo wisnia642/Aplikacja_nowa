@@ -591,7 +591,7 @@ public class Glowne_menu extends AppCompatActivity
         webView.getSettings().setAppCachePath( getApplicationContext().getCacheDir().getAbsolutePath() );
         String appCachePath = getApplicationContext().getCacheDir().getAbsolutePath();
         webView.getSettings().setAppCachePath(appCachePath);
-       webView.getSettings().setAllowFileAccess(true);
+        webView.getSettings().setAllowFileAccess(true);
         webView.getSettings().setAppCacheEnabled(true);
         webView.getSettings().setAllowFileAccess( true );
         webView.getSettings().setAppCacheEnabled( true );
@@ -624,7 +624,9 @@ public class Glowne_menu extends AppCompatActivity
 
                 //przejscie do glownego oka logowania
                 Intent c = new Intent(Glowne_menu.this, MainActivity.class);
+                c.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(c);
+                finish();
             }
         });
     }
@@ -666,7 +668,9 @@ public class Glowne_menu extends AppCompatActivity
         {
             case R.id.app_bar_search:
                 Intent c = new Intent(Glowne_menu.this, MainActivity.class);
+                c.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(c);
+                finish();
                 break;
             case  R.id.nav_gallery:
                 Intent d = new Intent(Glowne_menu.this, Podglad.class);

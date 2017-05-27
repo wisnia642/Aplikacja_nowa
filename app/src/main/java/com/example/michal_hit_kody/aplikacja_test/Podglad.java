@@ -94,11 +94,12 @@ public class Podglad extends AppCompatActivity
 
     ArrayList Id = new ArrayList();
     ArrayList Kiedy = new ArrayList();
+    ArrayList Kiedy_data = new ArrayList();
   //  ArrayList lista33 = new ArrayList();
 //    String[] dane1 = new String[250];
 //    String[] dane2 = new String[250];
  //   String[] dane3 = new String[250];
-    String uzytkownik,kiedy,pozycja,link1,link2,czas_dok;
+    String uzytkownik,pozycja,link1,link2,czas_dok;
 
     String email_msg = "";
     String subject = "";
@@ -281,7 +282,7 @@ public class Podglad extends AppCompatActivity
                     c = sampleDB.rawQuery("SELECT * FROM '" + uzytkownik + "'", null);
                 }else
                 {
-                    c = sampleDB.rawQuery("select * from '"+uzytkownik+"' where Data_Godzina BETWEEN '" +data_1+"  00 : 00" + "' AND '" +data_2+"  24 : 00" + "'", null);
+                    c = sampleDB.rawQuery("select * from '"+uzytkownik+"' where Kiedy BETWEEN '" + data_1+" 00:00" + "' AND '" + data_2+" 24:00" + "' order by Kiedy desc", null);
 
                 }
 
@@ -448,7 +449,7 @@ public class Podglad extends AppCompatActivity
                  curCSV = sampleDB.rawQuery("SELECT * FROM '" + uzytkownik + "'", null);
             }else
             {
-                 curCSV = sampleDB.rawQuery("select * from '"+uzytkownik+"' where Data_Godzina BETWEEN '" + data_1+"  00:00" + "' AND '" + data_2+"  24:00" + "'", null);
+                 curCSV = sampleDB.rawQuery("select * from '"+uzytkownik+"' where Kiedy BETWEEN '" + data_1+" 00:00" + "' AND '" + data_2+" 24:00" + "' order by Kiedy desc", null);
             }
             // Cursor curCSV = sql_db.rawQuery("SELECT * FROM "+CredentialDb.TABLE_NAME,null);
 
@@ -637,6 +638,7 @@ public class Podglad extends AppCompatActivity
                 if (zm != null) {
                     Id.add(y, String.valueOf(c.getString(0)));
                     Kiedy.add(y,String.valueOf(c.getString(4)));
+                    Kiedy_data.add(y,String.valueOf(c.getString(1)));
                     y++;
                 }
             }
@@ -660,7 +662,7 @@ public class Podglad extends AppCompatActivity
                 Log.i("myTag", "1" + e1);
             }
 
-            String sql = ("select * from "+uzytkownik+"");
+            String sql = ("select * from "+uzytkownik+" order by Kiedy desc");
 
             try {
                 rs = st.executeQuery(sql);
@@ -726,20 +728,24 @@ public class Podglad extends AppCompatActivity
         try {
             data_1 = data1.getText().toString();
             data_2 = data2.getText().toString();
-            Cursor c = sampleDB.rawQuery("select * from '"+uzytkownik+"' where Data_Godzina BETWEEN '" + data_1+"  00 : 00" + "' AND '" + data_2+"  24 : 00" + "'", null);
-            Log.i("blad","data "+ data_1+" 00 : 00"+"     "+data_2+" 24 : 00");
+          //  showToast("dupa");
+            Cursor c = sampleDB.rawQuery("select * from '"+uzytkownik+"' where Kiedy BETWEEN '" + data_1+" 00:00" + "' AND '" + data_2+" 24:00" + "' order by Kiedy desc", null);
+            Log.i("blad","data " + data_1+"+" + data_1+" 00:00" + "' AND '" + data_2+" 24:00" );
             while (c.moveToNext()) {
                 String zm = String.valueOf(c.getString(1));
                 if (zm != null) {
+                   // showToast("dupa");
                     Log.i("blad","czemu to nie działa"+String.valueOf(c.getString(0)));
                     Id.add(String.valueOf(c.getString(0)));
                     Kiedy.add( String.valueOf(c.getString(4)));
+                    Kiedy_data.add(String.valueOf(c.getString(1)));
                     x++;
                 }
             }
             sampleDB.close();
         } catch (Exception e) {
-
+           // showToast(""+e);
+            Log.i("mam",""+e);
         }
 
     }
@@ -802,7 +808,7 @@ public class Podglad extends AppCompatActivity
 
     public void lista1()
     {
-        CustomAdapter adapter=new CustomAdapter(this, Id,Kiedy);
+        CustomAdapter adapter=new CustomAdapter(this, Id,Kiedy_data);
 
         // String dane4[] = {dane1[x]+" "+dane2[x]+" "+dane3[x]};
 
@@ -917,7 +923,7 @@ public class Podglad extends AppCompatActivity
 
         lista = (ListView) findViewById(R.id.lista1);
 
-      CustomAdapter adapter=new CustomAdapter(this, Id,Kiedy);
+      CustomAdapter adapter=new CustomAdapter(this, Id,Kiedy_data);
 
        // String dane4[] = {dane1[x]+" "+dane2[x]+" "+dane3[x]};
 
@@ -960,8 +966,10 @@ public class Podglad extends AppCompatActivity
                    // String zm = String.valueOf(Kiedy.get(position));
                    Log.i("blad",""+String.valueOf(Kiedy.get(position)));
                    Intent intent11 = new Intent(getBaseContext(), Koniec.class);
-                   intent11.putExtra("EXTRA_SESSION", String.valueOf(Kiedy.get(position)));
+                 //  intent11.putExtra("EXTRA_SESSION", String.valueOf(Kiedy.get(position)));
+                //   showToast(String.valueOf(Kiedy.get(position)));
                    intent11.putExtra("USER",uzytkownik);
+                   intent11.putExtra("EXTRA_SESSION",String.valueOf(Kiedy_data.get(position)));
                    startActivity(intent11);
                }
 
